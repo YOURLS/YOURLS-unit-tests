@@ -1,6 +1,6 @@
 <?php
 
-class YOURLS_Tests extends PHPUnit_Framework_TestCase {
+class General_Tests extends PHPUnit_Framework_TestCase {
 
 	public function tester_upgrade() {
 		$this->markTestIncomplete( 'This test has not been implemented yet.' );
