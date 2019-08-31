@@ -5,30 +5,34 @@
  *
  * @group install
  */
-class Install_Tests extends PHPUnit_Framework_TestCase {
+class Install_Tests extends PHPUnit_Framework_TestCase
+{
 
     /**
-	 * Check if YOURLS is declared installed
-	 */
-	public function test_install() {
-		$this->assertFalse( yourls_is_installed() );
-		yourls_get_all_options();
-		$this->assertTrue( yourls_is_installed() );
-	}
+     * Check if YOURLS is declared installed
+     */
+    public function test_install()
+    {
+        $this->assertFalse(yourls_is_installed());
+        yourls_get_all_options();
+        $this->assertTrue(yourls_is_installed());
+    }
 
-	/**
-	 * Check that tables were correctly populated during install
-	 */
-	public function test_init_tables() {
-		// This should fail because these inserts have been taken care of during install
-		$this->assertFalse( yourls_initialize_options() );
-		$this->assertFalse( yourls_insert_sample_links() );
-	}
+    /**
+     * Check that tables were correctly populated during install
+     */
+    public function test_init_tables()
+    {
+        // This should fail because these inserts have been taken care of during install
+        $this->assertFalse(yourls_initialize_options());
+        $this->assertFalse(yourls_insert_sample_links());
+    }
 
-	/**
-	 * Test (sort of) table creation
-	 */
-	public function test_create_tables() {
+    /**
+     * Test (sort of) table creation
+     */
+    public function test_create_tables()
+    {
         
         /* The expected result has:
          *   - success messages: the table are created with a "CREATE IF NOT EXISTS",
@@ -43,25 +47,26 @@ class Install_Tests extends PHPUnit_Framework_TestCase {
          */
         
         $expected = array(
-            'success' => array (
+            'success' => array(
                 "Table 'yourls_url' created.",
                 "Table 'yourls_options' created.",
                 "Table 'yourls_log' created.",
                 "YOURLS tables successfully created.",
             ),
-            'error' => array (
+            'error' => array(
                 'Could not initialize options',
                 'Could not insert sample short URLs',
             ),
         );
         
-        $this->assertSame( $expected, yourls_create_sql_tables() );
-	}
+        $this->assertSame($expected, yourls_create_sql_tables());
+    }
     
-	/**
-	 * Test (sort of) defining constants
-	 */
-    public function test_correct_config() {
+    /**
+     * Test (sort of) defining constants
+     */
+    public function test_correct_config()
+    {
         $test = new \YOURLS\Config\Config(YOURLS_CONFIGFILE);
         
         // This should return a readable file
@@ -76,35 +81,38 @@ class Install_Tests extends PHPUnit_Framework_TestCase {
         $test->define_core_constants();
         $consts = get_defined_constants(true);
         $after = $consts['user'];
-        $this->assertSame($before,$after);
+        $this->assertSame($before, $after);
     }
 
-	/**
-	 * Test incorrect config provided
+    /**
+     * Test incorrect config provided
      * @expectedException YOURLS\Exceptions\ConfigException
-	 */
-    public function test_incorrect_config() {
+     */
+    public function test_incorrect_config()
+    {
         $test = new \YOURLS\Config\Config(rand_str());
         $test->find_config();
     }
 
-	/**
-	 * Test config not found
+    /**
+     * Test config not found
      * @expectedException YOURLS\Exceptions\ConfigException
-	 */
-    public function test_not_found_config() {
+     */
+    public function test_not_found_config()
+    {
         $test = new \YOURLS\Config\Config();
         $test->set_root(rand_str());
         $test->find_config();
     }
 
-	/**
-	 * Test Init actions. Not sure this is a good idea, might become cumbersome to maintain?
-	 */
-    public function test_init_defaults() {
+    /**
+     * Test Init actions. Not sure this is a good idea, might become cumbersome to maintain?
+     */
+    public function test_init_defaults()
+    {
         $test = new \YOURLS\Config\InitDefaults();
         
-        $expected = array (
+        $expected = array(
             'include_core_funcs' => true,
             'include_auth_funcs' => false,
             'include_install_upgrade_funcs' => false,
@@ -131,5 +139,4 @@ class Install_Tests extends PHPUnit_Framework_TestCase {
         
         $this->assertSame($expected, $actual);
     }
-  
 }

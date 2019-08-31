@@ -1,6 +1,6 @@
 <?php
 
-require_once( 'login_base.php' );
+require_once('login_base.php');
 
 /**
  * Login tests - via API
@@ -9,14 +9,15 @@ require_once( 'login_base.php' );
  * @group login
  * @since 0.1
  */
-class Auth_Login_API_Tests extends Login_Base {
-
-    public static function setUpBeforeClass() {
-        yourls_add_filter( 'is_API', 'yourls_return_true' );
+class Auth_Login_API_Tests extends Login_Base
+{
+    public static function setUpBeforeClass()
+    {
+        yourls_add_filter('is_API', 'yourls_return_true');
     }
 
-    public static function tearDownAfterClass() {
-        yourls_remove_filter( 'is_API', 'yourls_return_true' );
+    public static function tearDownAfterClass()
+    {
+        yourls_remove_filter('is_API', 'yourls_return_true');
     }
-
 }

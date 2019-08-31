@@ -5,32 +5,34 @@
  *
  * @group db
  */
-class DB_Set_Tests extends PHPUnit_Framework_TestCase {
-
+class DB_Set_Tests extends PHPUnit_Framework_TestCase
+{
     protected $ydb_copy = null;
 
     /**
      * Make a copy of $ydb
      */
-    public function setUp() {
+    public function setUp()
+    {
         global $ydb;
         $this->ydb_copy = $ydb;
-        unset( $ydb );
+        unset($ydb);
     }
 
     /**
      * Restore original $ydb
      */
-    public function tearDown() {
+    public function tearDown()
+    {
         global $ydb;
         $ydb = $this->ydb_copy;
     }
 
-    public function test_set() {
+    public function test_set()
+    {
         yourls_db_connect();
         
         global $ydb;
-        $this->assertInstanceOf( '\YOURLS\Database\YDB', $ydb );
+        $this->assertInstanceOf('\YOURLS\Database\YDB', $ydb);
     }
-
 }

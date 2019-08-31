@@ -6,10 +6,11 @@
  * @group http
  * @since 0.1
  */
-class HTTP_AYO_Tests extends PHPUnit_Framework_TestCase {
-
-    protected function tearDown() {
-        yourls_remove_all_filters( 'is_admin' );
+class HTTP_AYO_Tests extends PHPUnit_Framework_TestCase
+{
+    protected function tearDown()
+    {
+        yourls_remove_all_filters('is_admin');
     }
 
     /**
@@ -17,18 +18,19 @@ class HTTP_AYO_Tests extends PHPUnit_Framework_TestCase {
      *
      * @since 0.1
      */
-    public function test_check_core_version() {
-        $before = yourls_get_option( 'core_version_checks' );
+    public function test_check_core_version()
+    {
+        $before = yourls_get_option('core_version_checks');
         $check = yourls_check_core_version();
-        $after = yourls_get_option( 'core_version_checks' );
+        $after = yourls_get_option('core_version_checks');
 
-        if( $check === false ) {
-            $this->markTestSkipped( 'api.yourls.org unreachable or broken' );
+        if ($check === false) {
+            $this->markTestSkipped('api.yourls.org unreachable or broken');
         }
 
-        $this->assertNotSame( $before, $after );
-        $this->assertTrue( isset( $check->latest ) );
-        $this->assertTrue( isset( $check->zipurl ) );
+        $this->assertNotSame($before, $after);
+        $this->assertTrue(isset($check->latest));
+        $this->assertTrue(isset($check->zipurl));
     }
 
     /**
@@ -36,15 +38,17 @@ class HTTP_AYO_Tests extends PHPUnit_Framework_TestCase {
      *
      * @since 0.1
      */
-    public function test_check_only_in_admin() {
-        yourls_add_filter( 'is_admin', 'yourls_return_false' );
-        $this->assertFalse( yourls_maybe_check_core_version() );
+    public function test_check_only_in_admin()
+    {
+        yourls_add_filter('is_admin', 'yourls_return_false');
+        $this->assertFalse(yourls_maybe_check_core_version());
     }
 
     /**
      * Generate an object to mock last attempt of checking against api.yourls.org
      */
-    public function return_case_object( $failed_attempts, $last_attempt, $version_checked ) {
+    public function return_case_object($failed_attempts, $last_attempt, $version_checked)
+    {
         $checks = new stdClass();
         $checks->last_result     = rand_str();
         $checks->failed_attempts = $failed_attempts;
@@ -57,8 +61,8 @@ class HTTP_AYO_Tests extends PHPUnit_Framework_TestCase {
     /**
      * Provider of various test cases
      */
-    public function case_scenario() {
-
+    public function case_scenario()
+    {
         $return = array();
 
         /**
@@ -211,11 +215,11 @@ class HTTP_AYO_Tests extends PHPUnit_Framework_TestCase {
      * @depends test_check_core_version
      * @since 0.1
      */
-    public function test_api_check_in_various_scenario( $name, $checks, $expected ) {
-        yourls_add_filter( 'is_admin', 'yourls_return_true' );
-        yourls_update_option( 'core_version_checks', $checks );
+    public function test_api_check_in_various_scenario($name, $checks, $expected)
+    {
+        yourls_add_filter('is_admin', 'yourls_return_true');
+        yourls_update_option('core_version_checks', $checks);
 
-        $this->assertSame( $expected, yourls_maybe_check_core_version() );
+        $this->assertSame($expected, yourls_maybe_check_core_version());
     }
-
 }

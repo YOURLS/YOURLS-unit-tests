@@ -6,7 +6,8 @@
  * @group utils
  */
  
-class GetRequest_Tests extends PHPUnit_Framework_TestCase {
+class GetRequest_Tests extends PHPUnit_Framework_TestCase
+{
 
     /**
      * Various scenario:
@@ -15,7 +16,8 @@ class GetRequest_Tests extends PHPUnit_Framework_TestCase {
      *  - short URL requested with or without www
      *  - YOURLS installed in root or subdir
      */
-    public function requests() {
+    public function requests()
+    {
         return array(
             // Format:
             // array('expected', 'YOURLS_SITE', 'hostname/uri'),
@@ -88,7 +90,8 @@ class GetRequest_Tests extends PHPUnit_Framework_TestCase {
      * @dataProvider requests
      * @since 0.1
      */
-    public function test_get_request($expected, $yourls_site, $uri) {
-        $this->assertSame( $expected, yourls_get_request($yourls_site, $uri) );
-    }    
+    public function test_get_request($expected, $yourls_site, $uri)
+    {
+        $this->assertSame($expected, yourls_get_request($yourls_site, $uri));
+    }
 }

@@ -7,16 +7,18 @@
  * @group formatting
  * @since 0.1
  */
-class Format_Esc extends PHPUnit_Framework_TestCase {
-    
+class Format_Esc extends PHPUnit_Framework_TestCase
+{
     protected $ydb_backup;
     
-    protected function setUp() {
+    protected function setUp()
+    {
         global $ydb;
         $this->ydb_backup = $ydb;
     }
 
-    protected function tearDown() {
+    protected function tearDown()
+    {
         global $ydb;
         $ydb = $this->ydb_backup;
     }
@@ -24,7 +26,8 @@ class Format_Esc extends PHPUnit_Framework_TestCase {
     /**
      * Attributes and how they should be escaped
      */
-    function html_attributes() {
+    public function html_attributes()
+    {
         return array(
             array(
                 '"double quotes"',
@@ -47,32 +50,35 @@ class Format_Esc extends PHPUnit_Framework_TestCase {
 
 
     /**
-	 * Attribute escaping
-	 *
-	 * @dataProvider html_attributes
-	 * @since 0.1
-	 */	
-	function test_esc_attr( $attr, $escaped ) {
-		$this->assertSame( $escaped, yourls_esc_attr( $attr ) );
-	}
+     * Attribute escaping
+     *
+     * @dataProvider html_attributes
+     * @since 0.1
+     */
+    public function test_esc_attr($attr, $escaped)
+    {
+        $this->assertSame($escaped, yourls_esc_attr($attr));
+    }
     
     /**
-	 * Attribute escaping -- escaping twice shouldn't change
-	 *
-	 * @dataProvider html_attributes
-	 * @since 0.1
-	 */	
-	function test_esc_attr_twice( $attr, $escaped ) {
-		$this->assertSame( $escaped, yourls_esc_attr( yourls_esc_attr( $attr ) ) );
-	}
+     * Attribute escaping -- escaping twice shouldn't change
+     *
+     * @dataProvider html_attributes
+     * @since 0.1
+     */
+    public function test_esc_attr_twice($attr, $escaped)
+    {
+        $this->assertSame($escaped, yourls_esc_attr(yourls_esc_attr($attr)));
+    }
     
     /**
      * HTML string and how they should be escaped
      */
-    function html_strings() {
+    public function html_strings()
+    {
         return array(
             // Simple string
-            array( 
+            array(
                 'The quick brown fox.',
                 'The quick brown fox.',
             ),
@@ -113,21 +119,23 @@ class Format_Esc extends PHPUnit_Framework_TestCase {
             ),
         );
     }
-	
-	/**
-	 * HTML escaping
-	 *
+    
+    /**
+     * HTML escaping
+     *
      * @dataProvider html_strings
-	 * @since 0.1
-	 */	
-	function test_esc_html( $html, $escaped ) {
-		$this->assertSame( $escaped, yourls_esc_html( $html ) );
-	}
+     * @since 0.1
+     */
+    public function test_esc_html($html, $escaped)
+    {
+        $this->assertSame($escaped, yourls_esc_html($html));
+    }
     
     /**
      * String to escape and what they should look like once escaped
      */
-    public function strings_to_escape() {
+    public function strings_to_escape()
+    {
         return array(
            array( "I'm rock n' rollin'", "I\'m rock n\' rollin\'" ),
            array( 'I am "nice"', 'I am \"nice\"' ),
@@ -139,7 +147,8 @@ class Format_Esc extends PHPUnit_Framework_TestCase {
     /**
      * List of URLs and how they should be escaped
      */
-    function list_of_URLs() {
+    public function list_of_URLs()
+    {
         return array(
             array(
                 'http://example.com/?this=that&that=this',
@@ -167,14 +176,16 @@ class Format_Esc extends PHPUnit_Framework_TestCase {
      * @group url
      * @dataProvider list_of_URLs
      */
-    function test_esc_urls( $url, $escaped ) {
-        $this->assertEquals( $escaped, yourls_esc_url( $url ) );
+    public function test_esc_urls($url, $escaped)
+    {
+        $this->assertEquals($escaped, yourls_esc_url($url));
     }
 
     /**
      * Some strings and how they should be escaped in javascript
      */
-    function list_of_JS() {
+    public function list_of_JS()
+    {
         return array(
             array(
                 'hello world();',
@@ -197,14 +208,16 @@ class Format_Esc extends PHPUnit_Framework_TestCase {
      * @since 0.1
      * @dataProvider list_of_JS
      */
-    function test_esc_js( $js, $escaped ) {
-        $this->assertEquals( $escaped, yourls_esc_js( $js ) );
+    public function test_esc_js($js, $escaped)
+    {
+        $this->assertEquals($escaped, yourls_esc_js($js));
     }
 
     /**
      * Strings in a textarea and how they should be escaped
      */
-    function list_of_textarea() {
+    public function list_of_textarea()
+    {
         return array(
             array(
                 'hello<br/>world',
@@ -227,8 +240,8 @@ class Format_Esc extends PHPUnit_Framework_TestCase {
      * @since 0.1
      * @dataProvider list_of_textarea
      */
-    function test_esc_textarea( $text, $escaped ) {
-        $this->assertEquals( $escaped, yourls_esc_textarea( $text ) );
+    public function test_esc_textarea($text, $escaped)
+    {
+        $this->assertEquals($escaped, yourls_esc_textarea($text));
     }
-
 }

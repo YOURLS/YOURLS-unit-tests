@@ -8,9 +8,10 @@
  * @group http
  * @since 0.1
  */
-class HTTP_Requests_Tests extends PHPUnit_Framework_TestCase {
-    
-    private function url( $what = '' ) {
+class HTTP_Requests_Tests extends PHPUnit_Framework_TestCase
+{
+    private function url($what = '')
+    {
         return 'http://httpbin.org/' . $what;
     }
 
@@ -19,9 +20,10 @@ class HTTP_Requests_Tests extends PHPUnit_Framework_TestCase {
      *
      * @since 0.1
      */
-    public function test_get() {
-        $request = yourls_http_get( $this->url( 'get' ) );
-        $this->assertTrue( is_object( $request ) );
+    public function test_get()
+    {
+        $request = yourls_http_get($this->url('get'));
+        $this->assertTrue(is_object($request));
     }
 
     /**
@@ -29,9 +31,10 @@ class HTTP_Requests_Tests extends PHPUnit_Framework_TestCase {
      *
      * @since 0.1
      */
-    public function test_get_body() {
-        $request = yourls_http_get_body( $this->url( 'get' ) );
-        $this->assertTrue( is_string( $request ) );
+    public function test_get_body()
+    {
+        $request = yourls_http_get_body($this->url('get'));
+        $this->assertTrue(is_string($request));
     }
 
     /**
@@ -39,9 +42,10 @@ class HTTP_Requests_Tests extends PHPUnit_Framework_TestCase {
      *
      * @since 0.1
      */
-    public function test_post() {
-        $request = yourls_http_post( $this->url( 'post' ) );
-        $this->assertTrue( is_object( $request ) );
+    public function test_post()
+    {
+        $request = yourls_http_post($this->url('post'));
+        $this->assertTrue(is_object($request));
     }
 
     /**
@@ -49,9 +53,10 @@ class HTTP_Requests_Tests extends PHPUnit_Framework_TestCase {
      *
      * @since 0.1
      */
-    public function test_post_body() {
-        $request = yourls_http_post_body( $this->url( 'post' ) );
-        $this->assertTrue( is_string( $request ) );
+    public function test_post_body()
+    {
+        $request = yourls_http_post_body($this->url('post'));
+        $this->assertTrue(is_string($request));
     }
 
     /**
@@ -59,8 +64,8 @@ class HTTP_Requests_Tests extends PHPUnit_Framework_TestCase {
      *
      * @since 0.1
      */
-    public function test_requests() {
-        $this->assertTrue( is_string( yourls_http_get( 'http://10.0.0.666/' ) ) );
+    public function test_requests()
+    {
+        $this->assertTrue(is_string(yourls_http_get('http://10.0.0.666/')));
     }
-
 }

@@ -23,6 +23,7 @@ matrix:
   - php: hhvm
 
 before_script:
+  - vendor/bin/php-cs-fixer fix --dry-run --format=txt --verbose --diff --diff-format=udiff --config=.cs.php
   - mysql --version
   - git clone git://github.com/YOURLS/YOURLS.git
   - |
@@ -42,7 +43,8 @@ before_script:
 
 install: composer install
 
-script: vendor/bin/phpunit --configuration ./phpunit-travis.xml.dist
+script:
+  - vendor/bin/phpunit --configuration ./phpunit-travis.xml.dist
 
 notifications:
   email: false

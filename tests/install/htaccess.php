@@ -5,21 +5,23 @@
  *
  * @group install
  */
-class Install_htaccess_Tests extends PHPUnit_Framework_TestCase {
-
+class Install_htaccess_Tests extends PHPUnit_Framework_TestCase
+{
     protected $server;
 
     /**
      * Make a copy of $_SERVER
      */
-    public function setUp() {
+    public function setUp()
+    {
         $this->server = $_SERVER;
     }
 
     /**
      * Restore original $_SERVER
      */
-    public function tearDown() {
+    public function tearDown()
+    {
         $_SERVER = $this->server;
     }
 
@@ -27,7 +29,8 @@ class Install_htaccess_Tests extends PHPUnit_Framework_TestCase {
      * Provide server signatures, wether they're Apache (true) or something else (false) and
      * the name of the redirect rule file (.htaccess or web.config)
      */
-    public function servers() {
+    public function servers()
+    {
         return array(
             array( 'Very Common Apache', true,  '.htaccess'  ),
             array( 'LiteSpeed So Fast',  true,  '.htaccess'  ),
@@ -35,28 +38,31 @@ class Install_htaccess_Tests extends PHPUnit_Framework_TestCase {
         );
     }
 
-	/**
-	 * Check .htaccess creation - general function, checking if file is created
-	 *
-	 * @dataProvider servers
-	 * @since 0.1
-	 */
-	public function test_htaccess( $server, $is_apache, $file ) {
+    /**
+     * Check .htaccess creation - general function, checking if file is created
+     *
+     * @dataProvider servers
+     * @since 0.1
+     */
+    public function test_htaccess($server, $is_apache, $file)
+    {
         $_SERVER['SERVER_SOFTWARE'] = $server;
         
-        $this->assertSame( $is_apache, yourls_is_apache() );
+        $this->assertSame($is_apache, yourls_is_apache());
         
-        if( file_exists( YOURLS_ABSPATH . '/' . $file ) )
-            @unlink( YOURLS_ABSPATH . '/' . $file );
+        if (file_exists(YOURLS_ABSPATH . '/' . $file)) {
+            @unlink(YOURLS_ABSPATH . '/' . $file);
+        }
         
-		$this->assertTrue( yourls_create_htaccess() );
-		$this->assertFileExists( YOURLS_ABSPATH . '/' . $file );
-	}
+        $this->assertTrue(yourls_create_htaccess());
+        $this->assertFileExists(YOURLS_ABSPATH . '/' . $file);
+    }
 
     /**
      * Files in which we want to insert content
      */
-    public function htaccess_content() {
+    public function htaccess_content()
+    {
         return array(
             array( 'original_nofile.txt' ),
             array( 'original_empty.txt' ),
@@ -66,37 +72,37 @@ class Install_htaccess_Tests extends PHPUnit_Framework_TestCase {
         );
     }
 
-	/**
-	 * Check .htaccess creation - specific cases, checking file contents
-	 *
-	 * @dataProvider htaccess_content
-	 * @since 0.1
-	 */
-	public function test_htaccess_content( $filename ) {
-        $newfile  = str_replace( 'original_', 'test_', $filename );
-        $expected = str_replace( 'original_', 'expected_', $filename );
+    /**
+     * Check .htaccess creation - specific cases, checking file contents
+     *
+     * @dataProvider htaccess_content
+     * @since 0.1
+     */
+    public function test_htaccess_content($filename)
+    {
+        $newfile  = str_replace('original_', 'test_', $filename);
+        $expected = str_replace('original_', 'expected_', $filename);
         
         $newfile  = YOURLS_TESTDATA_DIR . '/htaccess/' . $newfile;
         $filename = YOURLS_TESTDATA_DIR . '/htaccess/' . $filename;
         $expected = YOURLS_TESTDATA_DIR . '/htaccess/' . $expected;
         
         // If file exist, copy it (if file doesn't exist, it's because we're creating from scratch)
-        if( file_exists( $filename ) ) {
-            if ( !copy( $filename, $newfile ) ) {
-                $this->markTestSkipped( "Cannot copy file $filename" );
+        if (file_exists($filename)) {
+            if (!copy($filename, $newfile)) {
+                $this->markTestSkipped("Cannot copy file $filename");
             }
         }
         
         $marker = 'YOURLS';
-        $content = array( 
+        $content = array(
             'This is a test',
             'Hello World',
             '1,2... 1,2...',
         );
         
-        $this->assertTrue( yourls_insert_with_markers( $newfile, $marker, $content ) );
-        $this->assertFileEquals( $expected, $newfile );
-        @unlink( $newfile );
-	}
-
+        $this->assertTrue(yourls_insert_with_markers($newfile, $marker, $content));
+        $this->assertFileEquals($expected, $newfile);
+        @unlink($newfile);
+    }
 }

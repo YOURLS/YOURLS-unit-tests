@@ -6,16 +6,18 @@
  * @group http
  * @since 0.1
  */
-class HTTP_Proxy_Tests extends PHPUnit_Framework_TestCase {
-    
-    protected function tearDown() {
-        yourls_remove_all_filters( 'http_get_proxy_bypass_host' );
+class HTTP_Proxy_Tests extends PHPUnit_Framework_TestCase
+{
+    protected function tearDown()
+    {
+        yourls_remove_all_filters('http_get_proxy_bypass_host');
     }
     
     /**
      * List of hosts and wether they should go through proxy or not
      */
-    public function proxy() {
+    public function proxy()
+    {
         return array(
             array( 'invalid', false ),
             array( 'http://localhost', false ),
@@ -36,14 +38,16 @@ class HTTP_Proxy_Tests extends PHPUnit_Framework_TestCase {
      * @dataProvider proxy
      * @since 0.1
      */
-    public function test_proxy( $url, $goes_through_proxy ) {
-        $this->assertSame( $goes_through_proxy, yourls_send_through_proxy( $url ) );
+    public function test_proxy($url, $goes_through_proxy)
+    {
+        $this->assertSame($goes_through_proxy, yourls_send_through_proxy($url));
     }
 
     /**
      * List of hosts and wether they should go through proxy or not, with 'bypass.me, *.skipthem.all' defined as by-passing hosts
      */
-    public function proxy_bypass_wildcard() {
+    public function proxy_bypass_wildcard()
+    {
         return array(
             array( 'invalid', false ),
             array( 'http://localhost', false ),
@@ -67,7 +71,8 @@ class HTTP_Proxy_Tests extends PHPUnit_Framework_TestCase {
         );
     }
     
-    public function bypass_hosts_wildcard() {
+    public function bypass_hosts_wildcard()
+    {
         return 'bypass.me, *.skipthem.all';
     }
 
@@ -77,9 +82,10 @@ class HTTP_Proxy_Tests extends PHPUnit_Framework_TestCase {
      * @dataProvider proxy_bypass_wildcard
      * @since 0.1
      */
-    public function test_proxy_bypass_wildcard( $url, $goes_through_proxy ) {
-        yourls_add_filter( 'http_get_proxy_bypass_host', array( $this, 'bypass_hosts_wildcard' ) );
-        $this->assertSame( $goes_through_proxy, yourls_send_through_proxy( $url ) );
+    public function test_proxy_bypass_wildcard($url, $goes_through_proxy)
+    {
+        yourls_add_filter('http_get_proxy_bypass_host', array( $this, 'bypass_hosts_wildcard' ));
+        $this->assertSame($goes_through_proxy, yourls_send_through_proxy($url));
     }
 
     /**
@@ -90,10 +96,11 @@ class HTTP_Proxy_Tests extends PHPUnit_Framework_TestCase {
      *
      * @since 0.1
      */
-    public function test_proxy_get_info() {
+    public function test_proxy_get_info()
+    {
         $before = $after = rand_str();
         $after = yourls_http_get_proxy();
-        $this->assertNotSame( $before, $after );
+        $this->assertNotSame($before, $after);
     }
 
     /**
@@ -104,10 +111,10 @@ class HTTP_Proxy_Tests extends PHPUnit_Framework_TestCase {
      *
      * @since 0.1
      */
-    public function test_proxy_get_bypass_hosts() {
+    public function test_proxy_get_bypass_hosts()
+    {
         $before = $after = rand_str();
         $after = yourls_http_get_proxy_bypass_host();
-        $this->assertNotSame( $before, $after );
+        $this->assertNotSame($before, $after);
     }
-
 }

@@ -11,8 +11,8 @@ global $ydb, $yourls_user_passwords, $yourls_reserved_URL,        // main object
        $yourls_locale, $yourls_l10n, $yourls_locale_formats,      // used by L10N API
        $yourls_allowedentitynames, $yourls_allowedprotocols;      // used by KSES
 
-require_once dirname( __FILE__ ) . '/utils.php';
-require_once dirname( __FILE__ ) . '/install.php';
+require_once dirname(__FILE__) . '/utils.php';
+require_once dirname(__FILE__) . '/install.php';
 
 // Include relevant config file
 define('YOURLS_CONFIGFILE', yut_find_config());
@@ -20,7 +20,7 @@ require_once YOURLS_CONFIGFILE;
 
 // Bootstrap YOURLS
 require_once YOURLS_ABSPATH . '/includes/vendor/autoload.php';
-define('YOURLS_TESTDATA_DIR', dirname( dirname( __FILE__ ) ) . '/data');
+define('YOURLS_TESTDATA_DIR', dirname(dirname(__FILE__)) . '/data');
 define('YOURLS_LANG_DIR', YOURLS_TESTDATA_DIR.'/pomo');
 $config = new \YOURLS\Config\Config(YOURLS_CONFIGFILE);
 $config->define_core_constants();
@@ -43,12 +43,12 @@ new \YOURLS\Config\Init($init);
 yut_install_yourls();
 
 // PHPUnit 6 compatibility for previous versions
-if ( class_exists( 'PHPUnit\Runner\Version' ) && version_compare( PHPUnit\Runner\Version::id(), '6.0', '>=' ) ) {
-    class_alias( 'PHPUnit\Framework\Assert',        'PHPUnit_Framework_Assert' );
-    class_alias( 'PHPUnit\Framework\TestCase',      'PHPUnit_Framework_TestCase' );
-    class_alias( 'PHPUnit\Framework\Error\Error',   'PHPUnit_Framework_Error' );
-    class_alias( 'PHPUnit\Framework\Error\Notice',  'PHPUnit_Framework_Error_Notice' );
-    class_alias( 'PHPUnit\Framework\Error\Warning', 'PHPUnit_Framework_Error_Warning' );
+if (class_exists('PHPUnit\Runner\Version') && version_compare(PHPUnit\Runner\Version::id(), '6.0', '>=')) {
+    class_alias('PHPUnit\Framework\Assert', 'PHPUnit_Framework_Assert');
+    class_alias('PHPUnit\Framework\TestCase', 'PHPUnit_Framework_TestCase');
+    class_alias('PHPUnit\Framework\Error\Error', 'PHPUnit_Framework_Error');
+    class_alias('PHPUnit\Framework\Error\Notice', 'PHPUnit_Framework_Error_Notice');
+    class_alias('PHPUnit\Framework\Error\Warning', 'PHPUnit_Framework_Error_Warning');
 }
 
 // At this point, tests will start

@@ -10,9 +10,10 @@
  * @since 0.1
  * @param string $len Optional string length
  * @return string Random string
- */ 
-function rand_str( $len=32 ) {
-	return substr( md5( uniqid( rand() ) ), 0, $len );
+ */
+function rand_str($len=32)
+{
+    return substr(md5(uniqid(rand())), 0, $len);
 }
 
 /**
@@ -20,8 +21,9 @@ function rand_str( $len=32 ) {
  *
  * @since 0.1
  */
-function yut_is_local() {
-	return defined( 'LOCAL_TESTSUITE' ) && LOCAL_TESTSUITE == true;
+function yut_is_local()
+{
+    return defined('LOCAL_TESTSUITE') && LOCAL_TESTSUITE == true;
 }
 
 /**
@@ -29,7 +31,8 @@ function yut_is_local() {
  *
  * @since 0.1
  */
-function change_one_global() {
+function change_one_global()
+{
     $var_name = $GLOBALS['test_var'];
     $GLOBALS[ $var_name ] = rand_str();
 }
@@ -39,7 +42,8 @@ function change_one_global() {
  *
  * @since 0.1
  */
-function change_variable( $var ) {
+function change_variable($var)
+{
     $var = rand_str();
     return $var;
 }
@@ -49,8 +53,10 @@ function change_variable( $var ) {
  *
  * @since 0.1
  */
-class Change_One_Global {
-    static function change_it() {
+class Change_One_Global
+{
+    public static function change_it()
+    {
         $var_name = $GLOBALS['test_var'];
         $GLOBALS[ $var_name ] = rand_str();
     }
@@ -61,8 +67,10 @@ class Change_One_Global {
 *
 * @since 0.1
 */
-class Change_Variable {
-    static function change_it( $var ) {
+class Change_Variable
+{
+    public static function change_it($var)
+    {
         return rand_str();
     }
 }
@@ -72,12 +80,13 @@ class Change_Variable {
 *
 * @since 0.1
 */
-function ut_var_dump( $what ) {
+function ut_var_dump($what)
+{
     ob_start();
-    var_dump( $what );
+    var_dump($what);
     $display = ob_get_contents();
     ob_end_clean();
-    fwrite( STDERR, $display );
+    fwrite(STDERR, $display);
 }
 
 /**
@@ -88,30 +97,31 @@ function ut_var_dump( $what ) {
  * Log_in_File::log( $something );
  *
  */
-class Log_in_File {
-
-	public static $has_logged = false;
-	
-	public static function log( $what ) {
-		// Don't mess with Travis
-		if( !yut_is_local() )
-			return;
-	
-		if( ! self::$has_logged ) {
-			self::$has_logged = true;
-			self::start_log();
-		}
-		
-		ob_start();
-		var_dump( $what );
-		$what = ob_get_clean();
-	
-		error_log( $what."\n", 3, dirname( dirname( __FILE__ ) ) . '/log.txt' );
-	}
-	
-	public static function start_log() {
-		self::log( "---------------- START TESTS ----------------" );
-	}
-	
+class Log_in_File
+{
+    public static $has_logged = false;
+    
+    public static function log($what)
+    {
+        // Don't mess with Travis
+        if (!yut_is_local()) {
+            return;
+        }
+    
+        if (! self::$has_logged) {
+            self::$has_logged = true;
+            self::start_log();
+        }
+        
+        ob_start();
+        var_dump($what);
+        $what = ob_get_clean();
+    
+        error_log($what."\n", 3, dirname(dirname(__FILE__)) . '/log.txt');
+    }
+    
+    public static function start_log()
+    {
+        self::log("---------------- START TESTS ----------------");
+    }
 }
- 

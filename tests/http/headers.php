@@ -5,23 +5,26 @@
  *
  * @group http
  */
-class HTTP_Headers_Tests extends PHPUnit_Framework_TestCase {
-    
-    public function todo_some_day_test_redirect() {
+class HTTP_Headers_Tests extends PHPUnit_Framework_TestCase
+{
+    public function todo_some_day_test_redirect()
+    {
         // PHP headers are a bitch to test. TODO some day.
     }
     
     /**
      * Test that we have some javascript redirection output
      */
-    public function test_javascript_redirect() {
+    public function test_javascript_redirect()
+    {
         $regexp = '!<script type="text/javascript">\s*window.location="http://somewhere";!m';
         
         $this->expectOutputRegex($regexp);
         yourls_redirect_javascript('http://somewhere');
     }
     
-    public function status_codes() {
+    public function status_codes()
+    {
         return array(
             array(100, 'Continue'),
             array(101, 'Switching Protocols'),
@@ -84,11 +87,13 @@ class HTTP_Headers_Tests extends PHPUnit_Framework_TestCase {
     /**
      * @dataProvider status_codes
      */
-    public function test_get_HTTP_status($code, $status) {
+    public function test_get_HTTP_status($code, $status)
+    {
         $this->assertSame(yourls_get_HTTP_status($code), $status);
     }
 
-    public function test_get_HTTP_status_invalid() {
+    public function test_get_HTTP_status_invalid()
+    {
         $this->assertSame(yourls_get_HTTP_status(1337), '');
     }
 }

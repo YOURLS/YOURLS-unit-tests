@@ -6,15 +6,16 @@
  * @group API
  * @since 0.1
  */
-class API_Output_Tests extends PHPUnit_Framework_TestCase {
-
+class API_Output_Tests extends PHPUnit_Framework_TestCase
+{
     protected $header_content;
 
     protected $header_status;
 
-    protected function tearDown() {
-        yourls_remove_all_actions( 'content_type_header' );
-        yourls_remove_all_actions( 'status_header' );
+    protected function tearDown()
+    {
+        yourls_remove_all_actions('content_type_header');
+        yourls_remove_all_actions('status_header');
     }
 
     /**
@@ -22,28 +23,32 @@ class API_Output_Tests extends PHPUnit_Framework_TestCase {
      *
      * @since 0.1
      */
-    public function test_output_return_or_echo() {
+    public function test_output_return_or_echo()
+    {
         $content = array( 'simple' => 'test' );
         
         // return
-        $this->assertSame( 'test', yourls_api_output( 'simple', $content, false, false ) );
+        $this->assertSame('test', yourls_api_output('simple', $content, false, false));
         // echo
-        $this->expectOutputString( 'test' );
-        yourls_api_output( 'simple', $content, false );
+        $this->expectOutputString('test');
+        yourls_api_output('simple', $content, false);
     }
 
-    public function get_content_header( $args ) {
+    public function get_content_header($args)
+    {
         $this->header_content = $args[0];
     }
 
-    public function get_status_header( $args ) {
+    public function get_status_header($args)
+    {
         $this->header_status = $args[0];
     }
 
     /**
      * Provide API output mode and the associated expected content-type header
      */
-    public function API_type() {
+    public function API_type()
+    {
         return array(
             array( 'xml',      'application/xml' ),
             array( 'json',     'application/json' ),
@@ -59,22 +64,24 @@ class API_Output_Tests extends PHPUnit_Framework_TestCase {
      * @dataProvider API_type
      * @since 0.1
      */
-    public function test_output_content_headers( $type, $expected_header ) {
-        yourls_add_action( 'content_type_header', array( $this, 'get_content_header' ) );
-        yourls_add_action( 'status_header', array( $this, 'get_status_header' ) );
+    public function test_output_content_headers($type, $expected_header)
+    {
+        yourls_add_action('content_type_header', array( $this, 'get_content_header' ));
+        yourls_add_action('status_header', array( $this, 'get_status_header' ));
         
         $content = array( 'hello' => 'test' );
-        $result  = yourls_api_output( $type, $content, true, false );
+        $result  = yourls_api_output($type, $content, true, false);
         
-        $this->assertSame( $expected_header, $this->header_content );
+        $this->assertSame($expected_header, $this->header_content);
     }
 
     /**
      * Provide mocked API output and the expected status codes
      */
-    public function status_code() {
-        $success_code = mt_rand( 1, 10 );
-        $error_code   = mt_rand( 1, 10 );
+    public function status_code()
+    {
+        $success_code = mt_rand(1, 10);
+        $error_code   = mt_rand(1, 10);
         
         $content_success = array( 'statusCode'    => $success_code );
         $content_error   = array( 'errorCode'     => $error_code );
@@ -93,12 +100,12 @@ class API_Output_Tests extends PHPUnit_Framework_TestCase {
      * @dataProvider status_code
      * @since 0.1
      */
-    public function test_output_status_headers( $content, $expected_status ) {
-        yourls_add_action( 'status_header', array( $this, 'get_status_header' ) );
+    public function test_output_status_headers($content, $expected_status)
+    {
+        yourls_add_action('status_header', array( $this, 'get_status_header' ));
         
-        $result  = yourls_api_output( 'simple', $content, true, false );
+        $result  = yourls_api_output('simple', $content, true, false);
         
-        $this->assertSame( $expected_status, $this->header_status );
+        $this->assertSame($expected_status, $this->header_status);
     }
-
 }
